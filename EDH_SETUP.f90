@@ -12,7 +12,7 @@ CONTAINS
         INTEGER :: N
         
         !Valores finales
-        XFINAL = 1.; TFINAL = 4.;
+        XFINAL = 0.8; TFINAL = 1.;
         
         N = NINT(XFINAL/DX) + 1 !Redondeo a int y sumo 1.
 !        DX = XFINAL/N + 1 !Se ajusta el DX para que encaje con el valor de N entero.
@@ -34,6 +34,7 @@ CONTAINS
         REAL(8), DIMENSION(:), ALLOCATABLE, INTENT(OUT) :: UINI
         !
         REAL(8) :: X, XTIRON
+        REAL(8), PARAMETER :: ERRORTRUNC = 1E-6 !error limite teniendo en cuenta el error de truncamiento arrastrado por sumar numeros en punto flotante.
         INTEGER :: I
         ALLOCATE(UINI(N))
         X = 0.
@@ -45,14 +46,15 @@ CONTAINS
         
         I = 1; XTIRON = 0.3
         !a la izq del tirón
-        DO WHILE(I < N .AND. X < XTIRON)
+        DO WHILE(I <= N .AND. (ABS(X-XTIRON) - ERRORTRUNC) >= 0.) 
             UINI(I) = 3.*X / 100.
+            PRINT *, X-XTIRON
             X = X + DX
             I = I + 1
         END DO
         !a la der del tirón
-        DO WHILE(I < N .AND. X < XFINAL)
-            UINI(I) = 3.*X / 100.
+        DO WHILE(I <= N .AND. (ABS(X-XFINAL) - ERRORTRUNC) >= 0.)
+            UINI(I) = (0.8-X) / 100.
             X = X + DX
             I = I + 1
         END DO
