@@ -18,7 +18,7 @@ CONTAINS
 !        DX = XFINAL/N + 1 !Se ajusta el DX para que encaje con el valor de N entero.
         
         !Condiciones iniciales
-        CALL SETUP_UINI(N, DX, UINI)
+        CALL SETUP_UINI(N, DX, XFINAL, UINI)
         
         !Condiciones de frontera
         CALL SETUP_FRONTERA(UINI) !aunque igualmente ya se supone que no varía porque se hace de i = 2 hasta N-1
@@ -28,18 +28,33 @@ CONTAINS
         
     END SUBROUTINE
     
-    SUBROUTINE SETUP_UINI(N, DX, UINI)
-        REAL(8), INTENT(IN) :: DX
+    SUBROUTINE SETUP_UINI(N, DX, XFINAL, UINI)
+        REAL(8), INTENT(IN) :: DX, XFINAL
         INTEGER, INTENT(IN) :: N
         REAL(8), DIMENSION(:), ALLOCATABLE, INTENT(OUT) :: UINI
         !
-        REAL(8) :: X
+        REAL(8) :: X, XTIRON
         INTEGER :: I
         ALLOCATE(UINI(N))
         X = 0.
-        DO I = 2, N-1
+        
+!        DO I = 2, N-1
+!            X = X + DX
+!            UINI(I) = SIN(PI * X)
+!        END DO
+        
+        I = 1; XTIRON = 0.3
+        !a la izq del tirón
+        DO WHILE(I < N .AND. X < XTIRON)
+            UINI(I) = 3.*X / 100.
             X = X + DX
-            UINI(I) = SIN(PI * X)
+            I = I + 1
+        END DO
+        !a la der del tirón
+        DO WHILE(I < N .AND. X < XFINAL)
+            UINI(I) = 3.*X / 100.
+            X = X + DX
+            I = I + 1
         END DO
     END SUBROUTINE
     
