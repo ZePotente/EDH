@@ -30,7 +30,8 @@ CONTAINS
     !Calcula la velocidad de propagación de la onda (c)
     FUNCTION EDH_CALC_C()
         REAL(8) :: EDH_CALC_C
-        EDH_CALC_C = SQRT(T*G/W)
+        EDH_CALC_C = (0.8*40.*9.8)
+!        EDH_CALC_C = SQRT(T*G/W)
 !        EDH_CALC_C = SQRT(T*L/M)
     END FUNCTION
 END MODULE
