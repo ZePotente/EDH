@@ -1,4 +1,4 @@
-PROGRAM P
+PROGRAM EDH
     !Modulo
     !USE M
     
@@ -7,5 +7,4 @@ PROGRAM P
     
 CONTAINS
     
-
 END PROGRAM
