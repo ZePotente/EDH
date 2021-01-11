@@ -12,7 +12,7 @@ CONTAINS
         INTEGER :: N
         
         !Valores finales
-        XFINAL = 0.8; TFINAL = 1.;
+        XFINAL = 0.8; TFINAL = 10000.;
         
         N = NINT(XFINAL/DX) + 1 !Redondeo a int y sumo 1.
 !        DX = XFINAL/N + 1 !Se ajusta el DX para que encaje con el valor de N entero.
